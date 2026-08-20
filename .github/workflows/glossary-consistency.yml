@@ -1,0 +1,89 @@
+name: glossary-consistency
+
+# MR-15: flags — never blocks — domain-artefact terms that disagree with Foundation's
+# cross-domain glossary.md. Domain-only: there is no Leadership equivalent (Leadership has
+# no domain-N/ artefacts) and no Foundation-side reusable counterpart, so this file carries
+# the check inline rather than calling out to a Foundation `workflow_call` reusable. Shape
+# mirrors the Category B two-checkout pattern used by banned-string-check.yml's caller
+# (spec §13.2): checkout this repo, checkout Foundation for its glossary.md, compare.
+on:
+  pull_request:
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  glossary-consistency:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout caller repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Checkout Foundation repo (for glossary.md)
+        uses: actions/checkout@v4
+        with:
+          repository: <adopter-org>/organisationos-foundation
+          # Deliberately not pinned like the reusable-workflow `@v1` refs elsewhere in this
+          # repo (spec §13.1) — this reads live glossary *content*, not a workflow version;
+          # the caller wants the current glossary, not a frozen copy.
+          ref: main
+          path: _foundation
+      - name: Compare domain-artefact terms against the Foundation glossary
+        id: check
+        run: |
+          set -e
+          glossary="_foundation/glossary.md"
+          changed=$(git diff --name-only --diff-filter=AM "origin/${GITHUB_BASE_REF}...HEAD" | grep -E '^domain-[0-9]+/.*\.md$' || true)
+          if [ -z "$changed" ]; then
+            echo "flagged=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # Foundation glossary terms are bolded bullets ("- **Term** — definition.") under
+          # the "## OrganisationOS terms" heading.
+          terms=$(awk '/^## OrganisationOS terms/{flag=1; next} /^## /{flag=0} flag' "$glossary" \
+                  | grep -oE '\*\*[^*]+\*\*' | sed 's/\*\*//g' | sort -u)
+          : > _flagged.txt
+          for f in $changed; do
+            [ -f "$f" ] || continue
+            while IFS= read -r term; do
+              [ -z "$term" ] && continue
+              # A domain file "defines" a term if it has its own bolded bullet for it, in the
+              # same "- **Term** — definition" shape as the Foundation glossary.
+              hit=$(grep -iE "\*\*${term}\*\*[[:space:]]*(—|-)" "$f" || true)
+              [ -z "$hit" ] && continue
+              foundation_def=$(grep -iE "\*\*${term}\*\*[[:space:]]*(—|-)" "$glossary" | head -1 || true)
+              hit_def=$(printf '%s\n' "$hit" | head -1 | sed -E 's/^[^—-]*(—|-)[[:space:]]*//')
+              foundation_only_def=$(printf '%s\n' "$foundation_def" | sed -E 's/^[^—-]*(—|-)[[:space:]]*//')
+              if [ -n "$foundation_def" ] && [ "$hit_def" != "$foundation_only_def" ]; then
+                echo "- $f: term '**${term}**' has a domain-local definition that differs from Foundation's glossary.md." >> _flagged.txt
+              fi
+            done <<< "$terms"
+          done
+          if [ -s _flagged.txt ]; then
+            echo "flagged=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "flagged=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Comment flagged terms (advisory — never blocks the PR)
+        if: steps.check.outputs.flagged == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const flagged = fs.readFileSync('_flagged.txt', 'utf8');
+            const body = [
+              'glossary-consistency (advisory — does not block merge):',
+              '',
+              flagged,
+              'Reconcile with `organisationos-foundation/glossary.md`, or confirm ≥2 domains do not',
+              'actually share this term and the domain-local definition is intentional. See the',
+              '"glossary check run?" line on the PR-template reviewer checklist.'
+            ].join('\n');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });

@@ -1,0 +1,20 @@
+name: structure-check
+
+on:
+  pull_request:
+    paths:
+      # structure-check verifies each domain has README.md + CLAUDE.md, and
+      # that interfaces/CDRs authored here use Foundation templates (§13.3).
+      # No-op on diffs that touch neither (MR-03) — routine content edits
+      # inside a domain's _drafts/, outputs/, or knowledge folders don't
+      # need this check to run.
+      - "domain-*/README.md"
+      - "domain-*/CLAUDE.md"
+      - "domain-*/adrs/**"
+      - "domain-*/interfaces/**"
+      - "foundation/interfaces/**"
+      - "foundation/cross-domain-decisions/**"
+
+jobs:
+  call:
+    uses: <adopter-org>/organisationos-foundation/.github/workflows/structure-check.yml@v1  # pin to a released tag or commit SHA; bump via a two-approver Foundation PR that also rolls the tag

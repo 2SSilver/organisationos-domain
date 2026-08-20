@@ -1,0 +1,8 @@
+name: draft-staleness
+
+on:
+  workflow_dispatch:
+
+jobs:
+  call:
+    uses: <adopter-org>/organisationos-foundation/.github/workflows/draft-staleness.yml@v1  # pin to a released tag or commit SHA; bump via a two-approver Foundation PR that also rolls the tag

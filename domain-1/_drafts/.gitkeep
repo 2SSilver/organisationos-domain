@@ -1,0 +1,3 @@
+# _drafts/
+
+`update-wiki` saves drafts here. 14-day shelf life enforced by `.github/workflows/draft-staleness.yml`. Each draft has three end-states: **merged**, **retired** (moved to `../_archive/`), or **extended** (Domain Lead approves another 14 days).

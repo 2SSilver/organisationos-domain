@@ -1,0 +1,37 @@
+# CODEOWNERS — Domain repo
+# Adopter customisation: replace every placeholder handle below with real GitHub handles.
+
+# Default — anything not matched below
+*                                @placeholder-admin
+
+# Two-approver harness paths
+/.github/                        @placeholder-admin @placeholder-leader
+/.claude/                        @placeholder-admin @placeholder-leader
+/CLAUDE.md                       @placeholder-admin @placeholder-leader
+/AGENTS.md                       @placeholder-admin @placeholder-leader
+/FORMATS.md                      @placeholder-admin @placeholder-leader
+
+# Per-domain ownership (root-anchored)
+/domain-1/                       @placeholder-domain-1-lead
+/domain-1/glossary.md            @placeholder-domain-1-lead
+/domain-1/_drafts/               @placeholder-domain-1-lead
+/domain-1/adrs/                  @placeholder-domain-1-lead
+
+/domain-2/                       @placeholder-domain-2-lead
+/domain-2/glossary.md            @placeholder-domain-2-lead
+/domain-2/_drafts/               @placeholder-domain-2-lead
+/domain-2/adrs/                  @placeholder-domain-2-lead
+
+/domain-3/                       @placeholder-domain-3-lead
+/domain-3/glossary.md            @placeholder-domain-3-lead
+/domain-3/_drafts/               @placeholder-domain-3-lead
+/domain-3/adrs/                  @placeholder-domain-3-lead
+
+/domain-4/                       @placeholder-domain-4-lead
+/domain-4/glossary.md            @placeholder-domain-4-lead
+/domain-4/_drafts/               @placeholder-domain-4-lead
+/domain-4/adrs/                  @placeholder-domain-4-lead
+
+# Back-flow PRs (Pattern A only — uncomment if you adopt Pattern A)
+# /domain-*/methods/             @placeholder-admin
+# /domain-*/prompts/             @placeholder-admin

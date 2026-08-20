@@ -1,0 +1,35 @@
+name: back-flow-rules
+
+# Calls the Foundation reusable workflow, which enforces the v3.1 §8
+# operational defences (500-line cap, 24h cool-off). The v3.2 §8/§16
+# carve-out permits a human-initiated, `back-flow`-labelled PR carrying only
+# the Markdown source of a client-facing deliverable through those same two
+# gates. The agent-initiated back-flow ban (§8) is a session-mount-state
+# condition caught by the session-id PR-template field and a hook that tags
+# commits made while --add-dir included a non-harness path — not by this
+# workflow, which does not have visibility into session mount state. This
+# trigger fires on every `back-flow`-labelled PR — human- or agent-initiated
+# alike — and lets the called job apply the two gates it does enforce.
+
+on:
+  pull_request:
+    # GitHub Actions' `on:` mapping cannot hold two `pull_request:` keys
+    # (a second key would silently overwrite the first instead of OR-ing
+    # with it), and `paths:` ANDs with every `types:` entry in a single
+    # trigger — it cannot OR "labelled" against "path changed". A `paths:`
+    # filter here would therefore silently skip this check for any
+    # `back-flow`-labelled PR whose diff lands outside the listed folders
+    # (e.g. `domain-N/outputs/`, `glossary.md`) — exactly the
+    # velocity-pressure scenario §8 warns about. So this trigger carries no
+    # `paths:` filter at all: the label always fires the check.
+    # `labeled`/`unlabeled` are included so gaining or losing `back-flow`
+    # re-evaluates the gate immediately, not just at open/sync/reopen.
+    # The actual gating on the `back-flow` label happens inside the called
+    # job (`if: contains(github.event.pull_request.labels.*.name,
+    # 'back-flow')` in the reusable workflow), which is what keeps this
+    # broader trigger a no-op for non-back-flow PRs rather than noise.
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+jobs:
+  call:
+    uses: <adopter-org>/organisationos-foundation/.github/workflows/back-flow-rules.yml@v1  # pin to a released tag or commit SHA; bump via a two-approver Foundation PR that also rolls the tag

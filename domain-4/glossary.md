@@ -1,0 +1,11 @@
+# Domain 4 — glossary
+
+Terms specific to Domain 4. Cross-domain terms live in `../foundation/glossary.md`.
+
+## Terms
+
+- **<term>** — <one-sentence definition>
+
+## Adopter customisation
+
+Replace this file at adoption time. Seed during the vocabulary workshop.
