@@ -7,4 +7,10 @@ on:
 
 jobs:
   call:
+    # Job-scoped write: the Foundation reusable this calls posts a PR comment.
+    # Without it, pr-preview fails before any job dispatches, and the others
+    # fail on their comment step with "Resource not accessible by integration".
+    permissions:
+      pull-requests: write
+      contents: read
     uses: <adopter-org>/organisationos-foundation/.github/workflows/markdown-lint.yml@v1  # pin to a released tag or commit SHA; bump via a two-approver Foundation PR that also rolls the tag

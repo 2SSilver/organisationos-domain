@@ -1,6 +1,7 @@
 # Domain 1 — CLAUDE.md
 
 ## Precedence (top of file = highest weight)
+
 - OrganisationOS terminology overrides plugin defaults.
 - Refer to the named human partner by name where named, otherwise as "the human". Do not use "your human partner".
 - Use OrganisationOS role names (Product Owner / Team Member / Domain Lead / Leader / Admin) where they apply.
@@ -9,12 +10,15 @@
 ## Absolute rules
 
 ### Confidentiality (hard — enforcement is layered)
+
 Identifying details from external work do not enter this repo. Enforcement layers (rely on 1 and 2; layer 3 is conscience):
+
 1. Pre-commit + CI banned-string check
 2. Back-flow review by Admin + Domain Lead on `back-flow`-labelled PRs
 3. This rule, as last-line operator conscience
 
 ### Cross-domain (structural)
+
 - Never copy content from another domain directly. Cross-domain interactions go through the Foundation repo's `interfaces/` folder (loaded via `additionalDirectories`). If the interface does not exist, raise a CDR — do not create one unilaterally.
 - Cross-domain changes require a CDR (use the CDR template at `standards/templates/cdr-template.md` in the Foundation repo).
 - Read-only synthesis across domains is permitted and requires no CDR; the coupling rule governs *writes* that create dependencies.

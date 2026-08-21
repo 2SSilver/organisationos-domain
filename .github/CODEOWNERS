@@ -32,6 +32,19 @@
 /domain-4/_drafts/               @placeholder-domain-4-lead
 /domain-4/adrs/                  @placeholder-domain-4-lead
 
-# Back-flow PRs (Pattern A only — uncomment if you adopt Pattern A)
-# /domain-*/methods/             @placeholder-admin
-# /domain-*/prompts/             @placeholder-admin
+# Back-flow PRs — ACTIVE BY DEFAULT (AR-25).
+# Shipping this commented out meant a back-flow PR fell through to
+# `* @placeholder-admin` — one approver — so the two-reviewer confidentiality
+# rule had no routing at all out of the box, and branch protection cannot fix
+# a commented-out line.
+#
+# Pattern B adopters (no external client work, so no back-flow): DELETE the two
+# lines below. Leaving them costs one extra reviewer on those folders; deleting
+# them by mistake under Pattern A silently removes a confidentiality gate. The
+# safe default is on.
+#
+# Note what this does NOT cover: AR-27 (the 500-line cap is measured per PR, so
+# four 400-line PRs clear it) and AR-28 (nothing verifies that two *distinct*
+# humans approved). Routing alone is not the whole control.
+/domain-*/methods/             @placeholder-admin
+/domain-*/prompts/             @placeholder-admin

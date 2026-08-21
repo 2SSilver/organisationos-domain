@@ -1,6 +1,6 @@
 # Domain 1 — placeholder
 
-> Replace this entire file when adopting. The vocabulary workshop (`foundation/standards/templates/vocabulary-workshop.md`) is the right time to write the real content.
+> Replace this entire file when adopting. The vocabulary workshop (`../../organisationos-foundation/standards/templates/vocabulary-workshop.md`) is the right time to write the real content.
 
 ## What this domain does (one paragraph)
 

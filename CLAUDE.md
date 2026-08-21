@@ -1,6 +1,7 @@
 # CLAUDE.md — Domain repo
 
 ## Precedence (top of file = highest weight)
+
 - OrganisationOS terminology overrides plugin defaults.
 - Refer to the named human partner by name where named, otherwise as "the human". Do not use "your human partner".
 - Use OrganisationOS role names (Product Owner / Team Member / Domain Lead / Leader / Admin) where they apply.
@@ -11,9 +12,11 @@
 ## Multi-repo context
 
 This is the **Domain repo** in a three-repo OrganisationOS set. It holds per-domain working content across the organisation's domains:
+
 - `domain-N/` — per-domain working surface: ADRs, drafts, glossary, methods/prompts, outputs, references
 
 Substrate lives in the **Foundation repo**, NOT here. This means:
+
 - Standards and templates: Foundation `standards/templates/`
 - Cross-domain interfaces: Foundation `interfaces/`
 - CDRs, NFRs, org-wide ADRs: Foundation `cross-domain-decisions/`, `nfrs/`, `architectural-decisions/`
@@ -42,6 +45,7 @@ Directory location is identity. Launch Claude inside `domain-1/` and Claude is a
 ## Promotion rule
 
 When an ADR in `domain-N/adrs/` affects two or more domains, OR has `shared: true` in its frontmatter, the `promotion-lint` CI check will prompt for one of:
+
 - `promoted-to: <Foundation PR URL>` — companion PR in Foundation with the cross-domain artefact
 - `local-reasoning: <one sentence>` — explicit reasoning for keeping it domain-local despite the trigger
 

@@ -9,7 +9,7 @@ This is the **Domain repo** in an OrganisationOS three-repo set. It holds the pe
 ## 2. What lives here
 
 | Path | Contents |
-|---|---|
+| --- | --- |
 | `domain-N/` | Per-domain working surface |
 | `domain-N/adrs/` | Domain-local Architecture Decision Records |
 | `domain-N/glossary.md` | Domain-specific terms (unique to this domain) |
@@ -26,7 +26,7 @@ This is the **Domain repo** in an OrganisationOS three-repo set. It holds the pe
 
 Recommended layout — all three repos as siblings under one parent folder:
 
-```
+```text
 ~/projects/<adopter-org>/
   organisationos-foundation/     ← must be cloned first
   organisationos-leadership/
@@ -40,7 +40,7 @@ Recommended layout — all three repos as siblings under one parent folder:
 ## 4. Role-to-clone-set matrix
 
 | Role | Required clones | `additionalDirectories` in `settings.local.json` |
-|---|---|---|
+| --- | --- | --- |
 | Team Member | Domain + Foundation | `["../organisationos-foundation"]` |
 | Product Owner | Domain + Foundation | `["../organisationos-foundation"]` |
 | Domain Lead | Domain + Foundation | `["../organisationos-foundation"]` |
@@ -62,6 +62,7 @@ Recommended layout — all three repos as siblings under one parent folder:
 ## 6. Promotion rule reminder
 
 When an ADR in `domain-N/adrs/` triggers the promotion-lint check (cross-domain mentions or `shared: true` in frontmatter), the author must set one of these fields before merge:
+
 - `promoted-to: <Foundation PR URL>` — companion PR in Foundation exists
 - `local-reasoning: <one sentence>` — explicit justification for keeping it domain-local
 

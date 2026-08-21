@@ -3,6 +3,7 @@
 This folder holds architectural decisions that affect only this domain.
 
 If a decision affects 2+ domains OR proposes a shared standard, the promotion-lint CI workflow will detect the trigger and post a PR comment asking the author to either:
+
 - **Promote** — open a companion PR in Foundation (`architectural-decisions/`), OR
 - **Keep local** — record a non-empty `local-reasoning:` field on the ADR's frontmatter.
 
