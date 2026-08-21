@@ -9,8 +9,8 @@ on:
       # inside a domain's _drafts/, outputs/, or knowledge folders don't
       # need this check to run.
       #
-      # Two monorepo-era entries were removed here: "foundation/interfaces/**"
-      # and "foundation/cross-domain-decisions/**". Those artefacts live in
+      # Two monorepo-era entries were removed here: they filtered on
+      # an interfaces path and a cross-domain-decisions path prefixed with the old monorepo name. Those live in
       # Foundation in the three-repo model, and a paths: filter only matches
       # files in its own repo — so both entries were dead and could not be
       # rewritten to a sibling path. CDRs raised against Foundation are
