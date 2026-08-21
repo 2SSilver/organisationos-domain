@@ -1,6 +1,6 @@
 # Domain 1 — glossary
 
-Terms specific to Domain 1. Terms used across multiple domains live in `../foundation/glossary.md`.
+Terms specific to Domain 1. Terms used across multiple domains live in `../../organisationos-foundation/glossary.md`.
 
 ## Terms
 
@@ -8,4 +8,4 @@ Terms specific to Domain 1. Terms used across multiple domains live in `../found
 
 ## Adopter customisation
 
-Replace this file at adoption time. The vocabulary workshop (`../foundation/standards/templates/vocabulary-workshop.md`) is the right time to seed the glossary.
+Replace this file at adoption time. The vocabulary workshop (`../../organisationos-foundation/standards/templates/vocabulary-workshop.md`) is the right time to seed the glossary.

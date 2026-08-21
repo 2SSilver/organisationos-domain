@@ -1,6 +1,6 @@
 # Domain 3 — glossary
 
-Terms specific to Domain 3. Cross-domain terms live in `../foundation/glossary.md`.
+Terms specific to Domain 3. Cross-domain terms live in `../../organisationos-foundation/glossary.md`.
 
 ## Terms
 

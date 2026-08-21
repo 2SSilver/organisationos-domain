@@ -4,16 +4,21 @@ on:
   pull_request:
     paths:
       # structure-check verifies each domain has README.md + CLAUDE.md, and
-      # that interfaces/CDRs authored here use Foundation templates (§13.3).
+      # that any interfaces authored here use Foundation templates (§13.3).
       # No-op on diffs that touch neither (MR-03) — routine content edits
       # inside a domain's _drafts/, outputs/, or knowledge folders don't
       # need this check to run.
+      #
+      # Two monorepo-era entries were removed here: "foundation/interfaces/**"
+      # and "foundation/cross-domain-decisions/**". Those artefacts live in
+      # Foundation in the three-repo model, and a paths: filter only matches
+      # files in its own repo — so both entries were dead and could not be
+      # rewritten to a sibling path. CDRs raised against Foundation are
+      # covered by Foundation's own self-ci.
       - "domain-*/README.md"
       - "domain-*/CLAUDE.md"
       - "domain-*/adrs/**"
       - "domain-*/interfaces/**"
-      - "foundation/interfaces/**"
-      - "foundation/cross-domain-decisions/**"
 
 jobs:
   call:

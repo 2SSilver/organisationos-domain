@@ -1,6 +1,6 @@
 # Domain 4 — glossary
 
-Terms specific to Domain 4. Cross-domain terms live in `../foundation/glossary.md`.
+Terms specific to Domain 4. Cross-domain terms live in `../../organisationos-foundation/glossary.md`.
 
 ## Terms
 

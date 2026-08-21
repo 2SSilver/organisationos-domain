@@ -1,6 +1,6 @@
 # Domain 2 — glossary
 
-Terms specific to Domain 2. Terms used across multiple domains live in `../foundation/glossary.md`.
+Terms specific to Domain 2. Terms used across multiple domains live in `../../organisationos-foundation/glossary.md`.
 
 ## Terms
 
