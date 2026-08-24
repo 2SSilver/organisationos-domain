@@ -43,6 +43,12 @@
 # them by mistake under Pattern A silently removes a confidentiality gate. The
 # safe default is on.
 #
+# Pattern B adopters also have no exit from the back-flow path tripwire
+# (back-flow-rules.yml), which fails any back-flow-labelled PR touching
+# methods/prompts without a human approving those folders. Pass an empty
+# `knowledge-paths` to this repo's back-flow-rules caller to make the
+# tripwire inert — spec §8: "the back-flow ritual does not apply" to Pattern B.
+#
 # Note what this does NOT cover: AR-27 (the 500-line cap is measured per PR, so
 # four 400-line PRs clear it) and AR-28 (nothing verifies that two *distinct*
 # humans approved). Routing alone is not the whole control.
