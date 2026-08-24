@@ -45,9 +45,13 @@
 #
 # Pattern B adopters also have no exit from the back-flow path tripwire
 # (back-flow-rules.yml), which fails any UNLABELLED PR touching
-# methods/prompts — the label is what the tripwire demands. Pass an empty
-# `knowledge-paths` to this repo's back-flow-rules caller to make the
-# tripwire inert — spec §8: "the back-flow ritual does not apply" to Pattern B.
+# methods/prompts — the label is what the tripwire demands. To make it inert,
+# add the input to this repo's back-flow-rules caller (it ships without a
+# `with:` block, so both lines are new):
+#     with:
+#       knowledge-paths: none
+# Spec §8: "the back-flow ritual does not apply" to Pattern B. Requires
+# Foundation @v1 to carry the input; on an older tag the caller errors.
 #
 # Note what this does NOT cover: AR-27 (the 500-line cap is measured per PR, so
 # four 400-line PRs clear it) and AR-28 (nothing verifies that two *distinct*
