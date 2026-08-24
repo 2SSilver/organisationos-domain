@@ -33,7 +33,7 @@ actual affected set.
 - [ ] Product Owner approved (where the CDR template lists PO for this artefact type)
 - [ ] Admin approved (where the CDR template lists Admin for this artefact type)
 
-Manual affordance; the completeness check is CI-enforced in the Foundation repo, where cross-domain artefacts live.
+Manual affordance; not CI-enforced in this repo. The `domains >= 2` completeness check lives only in Foundation's `self-ci.yml`, which has no `domain-*/` folders to trigger it — so a cross-domain PR here relies on the checklist above, not on CI.
 
 ## Reviewer affordances
 
