@@ -44,8 +44,8 @@
 # safe default is on.
 #
 # Pattern B adopters also have no exit from the back-flow path tripwire
-# (back-flow-rules.yml), which fails any back-flow-labelled PR touching
-# methods/prompts without a human approving those folders. Pass an empty
+# (back-flow-rules.yml), which fails any UNLABELLED PR touching
+# methods/prompts — the label is what the tripwire demands. Pass an empty
 # `knowledge-paths` to this repo's back-flow-rules caller to make the
 # tripwire inert — spec §8: "the back-flow ritual does not apply" to Pattern B.
 #
