@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       # structure-check verifies each domain has README.md + CLAUDE.md, and
-      # that any interfaces authored here use Foundation templates (§13.3).
+      # that any interfaces authored here use Foundation templates.
       # No-op on diffs that touch neither (MR-03) — routine content edits
       # inside a domain's _drafts/, outputs/, or knowledge folders don't
       # need this check to run.

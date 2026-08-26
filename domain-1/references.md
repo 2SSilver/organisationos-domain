@@ -7,6 +7,6 @@ External documents, dashboards, decks, and live systems this domain depends on b
 
 ## Retention policy
 
-Replace with the adopter's chosen default retention per v3.1 §16 and `../../organisationos-foundation/standards/templates/references-template.md`.
+Replace with the adopter's chosen default retention; see FORMATS.md and `../../organisationos-foundation/standards/templates/references-template.md`.
 
 If this file becomes a write hotspot, split it per-subfolder or per-entry — see the splitting option in `references-template.md`.

@@ -4,8 +4,9 @@ name: glossary-consistency
 # cross-domain glossary.md. Domain-only: there is no Leadership equivalent (Leadership has
 # no domain-N/ artefacts) and no Foundation-side reusable counterpart, so this file carries
 # the check inline rather than calling out to a Foundation `workflow_call` reusable. Shape
-# mirrors the Category B two-checkout pattern used by banned-string-check.yml's caller
-# (spec §13.2): checkout this repo, checkout Foundation for its glossary.md, compare.
+# mirrors the Category B two-checkout pattern used by banned-string-check.yml's caller —
+# the reusable-workflow pattern (Foundation `.github/workflows/`, called at `@v1`):
+# checkout this repo, checkout Foundation for its glossary.md, compare.
 on:
   pull_request:
 
@@ -26,7 +27,7 @@ jobs:
         with:
           repository: <adopter-org>/organisationos-foundation
           # Deliberately not pinned like the reusable-workflow `@v1` refs elsewhere in this
-          # repo (spec §13.1) — this reads live glossary *content*, not a workflow version;
+          # repo — this reads live glossary *content*, not a workflow version;
           # the caller wants the current glossary, not a frozen copy.
           ref: main
           path: _foundation

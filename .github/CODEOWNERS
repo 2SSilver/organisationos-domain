@@ -50,7 +50,7 @@
 # `with:` block, so both lines are new):
 #     with:
 #       knowledge-paths: none
-# Spec §8: "the back-flow ritual does not apply" to Pattern B. Requires
+# Per the back-flow operational defences: "the back-flow ritual does not apply" to Pattern B. Requires
 # Foundation @v1 to carry the input; on an older tag the caller errors.
 #
 # Note what this does NOT cover: AR-27 (the 500-line cap is measured per PR, so
