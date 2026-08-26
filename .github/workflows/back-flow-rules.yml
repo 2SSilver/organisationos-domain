@@ -1,15 +1,17 @@
 name: back-flow-rules
 
-# Calls the Foundation reusable workflow, which enforces the v3.1 §8
-# operational defences (500-line cap, 24h cool-off). The v3.2 §8/§16
-# carve-out permits a human-initiated, `back-flow`-labelled PR carrying only
-# the Markdown source of a client-facing deliverable through those same two
-# gates. The agent-initiated back-flow ban (§8) is a session-mount-state
-# condition caught by the session-id PR-template field and a hook that tags
-# commits made while --add-dir included a non-harness path — not by this
-# workflow, which does not have visibility into session mount state. This
-# trigger fires on every `back-flow`-labelled PR — human- or agent-initiated
-# alike — and lets the called job apply the two gates it does enforce.
+# Calls the Foundation reusable workflow, which enforces the back-flow
+# operational defences (500-line cap, 24h cool-off). A further carve-out,
+# described alongside those defences and in FORMATS.md, permits a
+# human-initiated, `back-flow`-labelled PR carrying only the Markdown source
+# of a client-facing deliverable through those same two gates. The
+# agent-initiated back-flow ban (one of the back-flow operational defences)
+# is a session-mount-state condition caught by the session-id
+# PR-template field and a hook that tags commits made while --add-dir
+# included a non-harness path — not by this workflow, which does not have
+# visibility into session mount state. This trigger fires on every
+# `back-flow`-labelled PR — human- or agent-initiated alike — and lets the
+# called job apply the two gates it does enforce.
 
 on:
   pull_request:
@@ -20,8 +22,9 @@ on:
     # filter here would therefore silently skip this check for any
     # `back-flow`-labelled PR whose diff lands outside the listed folders
     # (e.g. `domain-N/outputs/`, `glossary.md`) — exactly the
-    # velocity-pressure scenario §8 warns about. So this trigger carries no
-    # `paths:` filter at all: the label always fires the check.
+    # velocity-pressure scenario the back-flow operational defences exist to
+    # prevent. So this trigger carries no `paths:` filter at all: the label
+    # always fires the check.
     # `labeled`/`unlabeled` are included so gaining or losing `back-flow`
     # re-evaluates the gate immediately, not just at open/sync/reopen.
     # The actual gating on the `back-flow` label happens inside the called

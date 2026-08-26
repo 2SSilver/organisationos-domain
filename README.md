@@ -1,12 +1,52 @@
-# OrganisationOS — Domain repo
+![OrganisationOS](docs/assets/banner.png)
 
-## 1. What this is
+# OrganisationOS — Domain
 
-This is the **Domain repo** in an OrganisationOS three-repo set. It holds the per-domain working content for every domain in the organisation. Each domain has its own folder (`domain-1/` through `domain-N/`). Shared substrate lives in the Foundation repo and is loaded automatically via `additionalDirectories`.
+**The working surface of an OrganisationOS three-repo set.** OrganisationOS is a harness for human↔AI-agent collaboration in a knowledge-work organisation: three Git repositories, a small set of conventions, and CI that keeps them honest. This repo is where the work happens — one folder per domain, each with its own decisions, methods, drafts, outputs and glossary. This repo depends on the Foundation repo for shared standards, templates and CI; it does not redefine them.
 
----
+## The three repos
 
-## 2. What lives here
+```mermaid
+flowchart TB
+    F["Foundation — the substrate<br/>standards · glossary · interfaces<br/>CDRs · NFRs · org-wide ADRs<br/>reusable CI · shared agents and commands"]
+    L["Leadership — the steering surface<br/>strategy · forum cadence<br/>propagation log · drift log"]
+    D["Domain — the working surface<br/>domain-1 … domain-N<br/>local ADRs · methods · outputs"]
+    L -- "references CLAUDE.md<br/>calls reusable CI" --> F
+    D -- "references CLAUDE.md<br/>calls reusable CI" --> F
+    style D stroke-width:3px
+```
+
+| Repo | Holds | |
+| --- | --- | --- |
+| **Foundation** | Shared standards, decisions, CI and tooling | [organisationos-foundation](https://github.com/<adopter-org>/organisationos-foundation) |
+| **Leadership** | Strategy, Forum cadence, propagation log, drift log | [organisationos-leadership](https://github.com/<adopter-org>/organisationos-leadership) |
+| **Domain** | Per-domain working content | **You are here** |
+
+On disk the three are siblings under one parent folder. Cross-repo paths are written `../organisationos-foundation/…` from the repo root and `../../organisationos-foundation/` from inside a domain folder, and the settings that give a session reach into Foundation name those exact paths. Nest the repos anywhere else and they break, silently.
+
+```text
+~/projects/<adopter-org>/
+  organisationos-foundation/     ← clone this first
+  organisationos-leadership/
+  organisationos-domain/         ← this repo (or one per domain if split)
+```
+
+## Where do I start?
+
+```mermaid
+flowchart TB
+    Q{"Is OrganisationOS already running<br/>in your organisation?"}
+    Q -- "No — I am setting it up" --> ORG["Foundation docs/setup-org.md<br/>once per organisation"]
+    Q -- "Yes — I am joining" --> PER["Foundation docs/setup-person.md<br/>once per person"]
+    ORG --> PER
+    PER --> W["Start Claude inside your domain folder<br/>domain-N/ — location is identity"]
+```
+
+- **Setting OrganisationOS up for an organisation** — [setup-org.md](https://github.com/<adopter-org>/organisationos-foundation/blob/main/docs/setup-org.md) in Foundation.
+- **Joining as a Team Member, Product Owner or Domain Lead** — [setup-person.md](https://github.com/<adopter-org>/organisationos-foundation/blob/main/docs/setup-person.md) in Foundation. You clone this repo and Foundation; your `CLAUDE.local.md` goes in your domain folder.
+- **Understanding it first** — [concepts.md](https://github.com/<adopter-org>/organisationos-foundation/blob/main/docs/concepts.md) and [loading-model.md](https://github.com/<adopter-org>/organisationos-foundation/blob/main/docs/loading-model.md) in Foundation.
+
+## What lives here
 
 | Path | Contents |
 | --- | --- |
@@ -14,52 +54,13 @@ This is the **Domain repo** in an OrganisationOS three-repo set. It holds the pe
 | `domain-N/adrs/` | Domain-local Architecture Decision Records |
 | `domain-N/glossary.md` | Domain-specific terms (unique to this domain) |
 | `domain-N/_drafts/` | Short-lived drafts (14-day shelf life; DRI loop sweeps) |
-| `domain-N/methods/` | Domain methods and prompts (Pattern A back-flow) *(user-defined sub-structure — see §7)* |
-| `domain-N/outputs/` | Committed outputs (Markdown, CSV, etc.) *(user-defined sub-structure — see §7)* |
+| `domain-N/methods/` | Domain methods and prompts (Pattern A back-flow) *(user-defined sub-structure)* |
+| `domain-N/outputs/` | Committed outputs (Markdown, CSV, etc.) *(user-defined sub-structure)* |
 | `domain-N/references.md` | Pointer log to external/live artefacts |
 
 **NOT here:** CDRs, NFRs, cross-domain interfaces, org-wide ADRs, standards, or the shared glossary. Those live in the Foundation repo. If content affects more than one domain, open a PR in Foundation.
 
----
-
-## 3. Clone layout
-
-Recommended layout — all three repos as siblings under one parent folder:
-
-```text
-~/projects/<adopter-org>/
-  organisationos-foundation/     ← must be cloned first
-  organisationos-leadership/
-  organisationos-domain/         ← this repo
-```
-
-**Critical:** do NOT nest these repos inside another project tree (e.g. not inside a PAI workspace or another Git repo). Cross-repo `@import` in `CLAUDE.md` resolves via `../organisationos-foundation/CLAUDE.md` — the path must be a top-level sibling.
-
----
-
-## 4. Role-to-clone-set matrix
-
-| Role | Required clones | `additionalDirectories` in `settings.local.json` |
-| --- | --- | --- |
-| Team Member | Domain + Foundation | `["../organisationos-foundation"]` |
-| Product Owner | Domain + Foundation | `["../organisationos-foundation"]` |
-| Domain Lead | Domain + Foundation | `["../organisationos-foundation"]` |
-| Leader | All three | `["../organisationos-foundation", "../organisationos-leadership"]` from Domain |
-| Admin | All three (+ per-domain if split) | Full set in each clone |
-
----
-
-## 5. Onboarding sequence
-
-1. Clone Foundation first (the `@import` in this repo's `CLAUDE.md` resolves to `../organisationos-foundation/`).
-2. Clone this repo as a sibling.
-3. Update `.github/CODEOWNERS` with real GitHub handles for each domain lead.
-4. The role→`additionalDirectories` mapping has one canonical source: Foundation's `standards/templates/onboarding/` (5 role-specific files). Copy the file matching your role — `../organisationos-foundation/standards/templates/onboarding/settings.local.json.example-<role>` — to `.claude/settings.local.json`, and the matching `claude-local-<role>.example.md` to `CLAUDE.local.md`. This repo's own `.claude/settings.local.json.example`, if present, is a pointer to that folder, not a second copy of the mapping. On a role change, re-copy from the updated onboarding file (see the monthly-DRI checklist).
-5. Install the pre-commit hook from Foundation: `cp ../organisationos-foundation/.github/hooks/banned-string-pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit`.
-
----
-
-## 6. Promotion rule reminder
+## Promotion rule
 
 When an ADR in `domain-N/adrs/` triggers the promotion-lint check (cross-domain mentions or `shared: true` in frontmatter), the author must set one of these fields before merge:
 
@@ -68,9 +69,7 @@ When an ADR in `domain-N/adrs/` triggers the promotion-lint check (cross-domain 
 
 The CI check `promotion-lint.yml` blocks merge until one field is set.
 
----
-
-## 7. Generic worked example — GreenLeaf Research Lab
+## Worked example — GreenLeaf Research Lab
 
 GreenLeaf Research Lab runs four domains: **research**, **operations**, **fundraising**, and **compliance**. A Team Member on the research domain drafts an ADR in `domain-research/adrs/` proposing how to anonymise datasets before sharing them externally. The ADR mentions both the operations and compliance domains in the context section.
 
@@ -78,9 +77,9 @@ The `promotion-lint` CI check fires: it detects two domain mentions. The author 
 
 The author opens a companion ADR PR in Foundation (`architectural-decisions/`). One Leader plus the Domain Lead of research, operations, and compliance review the Foundation ADR. On merge, Admin opens a propagation log entry in Leadership and opens implementation PRs for each affected domain. Each Domain Lead merges their domain's implementation PR independently. The ADR in `domain-research/adrs/` is merged with `promoted-to: <Foundation PR URL>`.
 
----
+The full circuit is drawn in Foundation's [concepts.md](https://github.com/<adopter-org>/organisationos-foundation/blob/main/docs/concepts.md#how-a-decision-travels).
 
-## 8. Split-per-domain path
+## Split-per-domain path
 
 When the organisation grows and one Domain repo per domain is preferable, follow these steps to migrate from "one Domain repo with N folders" to "one Domain repo per domain":
 
@@ -93,8 +92,9 @@ When the organisation grows and one Domain repo per domain is preferable, follow
 
 This process can be done incrementally — one domain at a time.
 
----
+## Further reading
 
-## 9. Pointer to Foundation
+- Foundation's [`FORMATS.md`](https://github.com/<adopter-org>/organisationos-foundation/blob/main/FORMATS.md) is mirrored here as `FORMATS.md`; the Foundation copy is canonical and `format-gate` fails a PR if the mirror drifts.
+- Each `domain-N/references.md` points at live artefacts that live outside Git.
 
-For source of truth on standards, CDRs, NFRs, interfaces, and shared CI, see the Foundation repo (`../organisationos-foundation/`). Domain content references Foundation — it does not copy or redefine it.
+These templates originate from [2SSilver/organisationos-domain](https://github.com/2SSilver/organisationos-domain), MIT licensed.
