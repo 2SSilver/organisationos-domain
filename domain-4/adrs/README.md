@@ -15,7 +15,7 @@ The PR cannot merge until one of the two is set.
 
 ## Frontmatter
 
-Use the ADR template at `standards/templates/adr-template.md` in the Foundation repo (loaded automatically via `additionalDirectories` when Claude is launched here — see the Domain repo `README.md` for the recommended clone layout). Add these additional fields to its frontmatter:
+Use the ADR template at `standards/templates/adr-template.md` in the Foundation repo — reachable once you've set up the clone layout described in the Domain repo `README.md`. For what `additionalDirectories` actually grants (and what it doesn't), see Foundation's `docs/loading-model.md`. Add these additional fields to its frontmatter:
 
 ```yaml
 ---
